@@ -9,5 +9,6 @@
         public virtual VehicleType VehicleType { get; set; }
         public int AppUserId { get; set; }
         public virtual AppUser AppUser { get; set; }
+        public virtual ICollection<VehiclePhoto> VehiclePhotos { get; set; } = new List<VehiclePhoto>();
     }
 }
