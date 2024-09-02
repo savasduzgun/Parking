@@ -21,18 +21,21 @@
             </div>
 
             <div class="login-form">
-                <div class="control-group">
-                    <input type="text" required class="login-field" value="" placeholder="Kullanıcı Adı" id="login-name">
-                    <label class="login-field-icon fui-user" for="login-name"></label>
-                </div>
+                <form asp-action="Login" method="post">
+                    <div class="control-group">
+                        <input asp-for="UserName" required class="login-field" value="" placeholder="Kullanıcı Adı" id="login-name">
+                        <label class="login-field-icon fui-user" for="login-name"></label>
+                    </div>
 
-                <div class="control-group">
-                    <input type="password" required class="login-field" value="" placeholder="Şifre" id="login-pass">
-                    <label class="login-field-icon fui-lock" for="login-pass"></label>
-                </div>
+                    <div class="control-group">
+                        <input asp-for="Password" required class="login-field" value="" placeholder="Şifre" id="login-pass">
+                        <label class="login-field-icon fui-lock" for="login-pass"></label>
+                    </div>
 
-                <a class="btn btn-primary btn-large btn-block" href="#">Giriş Yap</a>
+                    <button type="submit" class="btn btn-primary btn-large btn-block">Giriş Yap</button>
+                </form>
             </div>
+
         </div>
     </div>
 </body>
