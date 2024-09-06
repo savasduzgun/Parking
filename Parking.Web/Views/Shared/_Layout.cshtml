@@ -165,7 +165,7 @@
                         @if (User.IsInRole("Admin"))
                         {
                             <li>
-                                <a href="index.html">
+                                <a asp-action="Index" asp-controller="User">
                                     <i class="uil-home-alt"></i><span class="badge rounded-pill bg-primary float-end">01</span>
                                     <span>Kullanıcılar</span>
                                 </a>

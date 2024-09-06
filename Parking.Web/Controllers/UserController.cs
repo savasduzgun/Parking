@@ -15,6 +15,11 @@ namespace Parking.Web.Controllers
         {
             _context = context;
         }
+
+        public IActionResult Index()
+        {
+            return View();
+        }
         public IActionResult Login()
         {
             return View();
