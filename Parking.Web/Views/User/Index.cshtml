@@ -18,7 +18,14 @@
 @section Scripts{
     <script>
         $(document).ready(function () {
-            $("#tblUsers").DataTable();
+            $("#tblUsers").DataTable({
+                ajax:'/User/GetAll',
+                columns:[
+                    {data:'id', title:'Id'},
+                    {data:'userName', title:'Kullanıcı Adı'},
+                    {data:'fullName', title:'Ad Soyad'}
+                ]
+            });
         });
     </script>
 }
