@@ -8,7 +8,6 @@
             </div>
             <div class="card-body">
                 <table id="tblUsers" class="table table-bordered table-striped table-hover">
-                 
                 </table>
             </div>
         </div>
@@ -16,20 +15,41 @@
     </div>
 </div>
 
-@section Scripts{
+@section Scripts {
     <script>
         $(document).ready(function () {
-            $("#tblUsers").DataTable({
-                ajax:'/User/GetAll',
-                columns:[
-                    {data:'id', title:'Id'},
-                    {data:'userName', title:'Kullanıcı Adı'},
-                    {data:'fullName', title:'Ad Soyad'},
-                    { data: 'id', title: 'İşlemler', render: function () { 
-                        return `<a class="btn uil-trash-alt fs-6 btn-danger"></a>`;
-                    } }
+            var DataTable= $("#tblUsers").DataTable({
+                ajax: '/User/GetAll',
+                columns: [
+                    { data: 'id', title: 'Id' },
+                    { data: 'userName', title: 'Kullanıcı Adı' },
+                    { data: 'fullName', title: 'Ad Soyad' },
+                    {
+                        data: 'id', title: 'İşlemler', render: function (data) {
+                            return `<a onclick="deleteUser(${data}, this)" class="btn uil-trash-alt fs-6 btn-danger"></a>`;
+                        }
+                    }
                 ]
             });
         });
+
+        function deleteUser(userId, button) {
+                   
+            if (confirm("Silmek istediğinize emin misiniz ?"))
+              {
+                 $.ajax({
+                    url:'User/Delete',
+                    type:'POST',
+                    data: {
+                        id: userId
+                    },
+                    success: function () {
+
+                     let satir = $(button).parent().parent();
+                     DataTable.row(satir).remove().draw();
+                    }
+                 });
+               }
+             }
     </script>
 }
