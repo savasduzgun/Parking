@@ -59,11 +59,23 @@ namespace Parking.Web.Controllers
             return RedirectToAction("Login");
         }
 
+        [HttpPost]
         public IActionResult Add(AppUser appUser)
         {
             _context.Users.Add(appUser);
             _context.SaveChanges();
             return Ok(appUser); //Aynı nesneyi dönsün sayfa yenilenmeden datatable işlemleri yapılabilsin.
         }
+
+        [HttpPost]
+        public IActionResult Delete(int id) 
+        {
+            AppUser appUser = _context.Users.Find(id);
+            appUser.IsDeleted = true;
+            _context.Users.Update(appUser);
+            _context.SaveChanges();
+            return Ok();
+        }
+
     }
 }
