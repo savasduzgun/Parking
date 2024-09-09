@@ -90,6 +90,7 @@
 
 @section Scripts {
     <script>
+        var DataTable = "";
         $(document).ready(function () {
             $("#btnAdd").click(function () {
                 $("#modalAdd").modal("show");
@@ -103,9 +104,20 @@
                             isAdmin:$("#ddlIsAdmin").val()==0?false:true
                         }
                     }
+
+                    $.ajax({
+                        url: '/User/Add',
+                        type: 'POST',
+                        data: data,
+                        success: function (res) {
+                            
+                            $("#modalAdd").modal("hide");
+                            DataTable.row.add(res).draw();
+                        }
+                    })
                 })
             })
-            var DataTable= $("#tblUsers").DataTable({
+            DataTable= $("#tblUsers").DataTable({
                 ajax: '/User/GetAll',
                 columns: [
                     { data: 'id', title: 'Id' },
