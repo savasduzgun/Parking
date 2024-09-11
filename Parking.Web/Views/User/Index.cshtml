@@ -35,7 +35,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalTitle">
-                    Yeni Kullanıcı Kaydı
+                    
                 </h5>
                 <button
                     type="button"
@@ -95,12 +95,14 @@
             $("#btnAdd").click(function () {
                 $("#modalAdd").modal("show");
                 //modaldaki form-control classına sahip elementlerin değerlerini sıfırlar
-                $("#modalAdd.form-control").val();
+                $("#modalAdd .form-control").val('');
+                $("#modalTitle").text("Yeni Kullanıcı Kaydı");
+
                 $("#btnSave").off().click(function () {
 
                     let data = {
                         appUser: {
-                            fullName:$("txtFullname").val(),
+                            fullName:$("#txtFullname").val(),
                             userName:$("#txtUsername").val(),
                             password:$("#txtPassword").val(),
                             isAdmin:$("#ddlIsAdmin").val()==0?false:true
@@ -119,6 +121,9 @@
                     })
                 })
             })
+
+
+
             DataTable= $("#tblUsers").DataTable({
                 ajax: '/User/GetAll',
                 columns: [
@@ -127,7 +132,7 @@
                     { data: 'fullName', title: 'Ad Soyad' },
                     {
                         data: 'id', title: 'İşlemler', render: function (data) {
-                            return `<a onclick="deleteUser(${data}, this)" class="btn uil-trash-alt fs-6 btn-danger"></a>`;
+                            return `<a onclick="deleteUser(${data}, this)" class="btn uil-pen fs-6 btn-primary"></a> <a onclick="deleteUser(${data}, this)" class="btn uil-trash-alt fs-6 btn-danger"></a>`;
                         }
                     }
                 ]
