@@ -94,7 +94,7 @@
         $(document).ready(function () {
             $("#btnAdd").click(function () {
                 $("#modalAdd").modal("show");
-                $("#btnSave").click(function () {
+                $("#btnSave").off().click(function () {
 
                     let data = {
                         appUser: {
