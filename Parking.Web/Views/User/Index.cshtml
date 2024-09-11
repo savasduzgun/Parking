@@ -94,6 +94,8 @@
         $(document).ready(function () {
             $("#btnAdd").click(function () {
                 $("#modalAdd").modal("show");
+                //modaldaki form-control classına sahip elementlerin değerlerini sıfırlar
+                $("#modalAdd.form-control").val();
                 $("#btnSave").off().click(function () {
 
                     let data = {
