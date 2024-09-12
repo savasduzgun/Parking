@@ -130,9 +130,21 @@
                     { data: 'id', title: 'Id' },
                     { data: 'userName', title: 'Kullanıcı Adı' },
                     { data: 'fullName', title: 'Ad Soyad' },
+                    { data: 'isAdmin', title: 'Admin mi ?', render: function (data) { 
+                        if (data) {
+                            return `<i class="btn uil-check fs-6 btn-success"></i>`;
+                        }
+                        else {
+                             return `<i class="btn uil-times fs-6 btn-danger"></i>`;
+                        }
+
+                            // return data ? `<i class="btn uil-check fs-6 btn-success"></i>` : `<i class="btn uil-times fs-6 btn-danger"></i>`
+
+                        
+                    } },
                     {
                         data: 'id', title: 'İşlemler', render: function (data) {
-                            return `<a onclick="deleteUser(${data}, this)" class="btn uil-pen fs-6 btn-primary"></a> <a onclick="deleteUser(${data}, this)" class="btn uil-trash-alt fs-6 btn-danger"></a>`;
+                            return `<a onclick="updateUser(${data}, this)" class="btn uil-pen fs-6 btn-primary"></a> <a onclick="deleteUser(${data}, this)" class="btn uil-trash-alt fs-6 btn-danger"></a>`;
                         }
                     }
                 ]
