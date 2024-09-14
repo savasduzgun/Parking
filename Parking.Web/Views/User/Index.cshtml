@@ -98,7 +98,7 @@
                 $("#modalAdd .form-control").val('');
                 $("#modalTitle").text("Yeni Kullanıcı Kaydı");
 
-                $("#btnSave").off().click(function () {
+                $("#btnSave").text("Kaydet").off().click(function () {
 
                     let data = {
                         appUser: {
@@ -156,18 +156,64 @@
             if (confirm("Silmek istediğinize emin misiniz ?"))
               {
                  $.ajax({
-                    url:'User/Delete',
+                    url:'/User/Delete',
                     type:'POST',
                     data: {
                         id: userId
                     },
                     success: function () {
 
+                        //DataTable ın ajax kaynağını yeniden request etmesini önlemek için, doğrudan       DataTable ın row collectionından ilgili satırı client tarafında silme işlemi
                      let satir = $(button).parent().parent();
                      DataTable.row(satir).remove().draw();
                     }
                  });
                }
              }
+
+        function updateUser(userId, button) {
+           
+            $.ajax({
+                url: '/User/GetById',
+                type: 'POST',
+                data: {
+                    id: userId
+                },
+                success: function (res) {
+
+                    $("#modalAdd").modal("show");
+                    $("#modalTitle").text("Kullanıcı Düzenle");
+                    $("#txtFullname").val(res.fullName);
+                    $("#txtUsername").val(res.userName);
+                    $("#txtPassword").val(res.password);
+                    res.isAdmin ? $("#ddlIsAdmin").val(1) : $("#ddlIsAdmin").val(0);
+
+                    //kaydet butonunun davranışı değişiyor
+                    $("#btnSave").text("Düzenle").off().click(function () {
+
+                        //databaseden gelen json içindeki lazım olan fieldlar değişti aşağıdaki data appUserda bunlar değiştirilmedi deleted created gibi değişiklik gerektirmeyen fieldlar bozulmadan kaldı appUser a res atandı
+                        res.userName = $("#txtUsername").val();
+                        res.fullName = $("#txtFullname").val();
+                        res.password = $("#txtPassword").val();
+                        res.isAdmin = $("#dllIsAdmin").val();
+
+                        $.ajax({
+                            url: '/User/Update',
+                            type: 'POST',
+                            data: {
+                                appUser: res
+                            },
+                            success: function (updatedUser) {
+                                $("#modalAdd").modal("hide");
+
+                                //DataTable ın ajax kaynağını yeniden request etmesini önlemek için, doğrudan       DataTable ın row collectionından ilgili satırı client tarafında güncelleme        işlemi
+                                let satir = $(button).parent(parent);
+                                DataTable.row(satir).data(updatedUser).draw();
+                            }
+                        });
+                    });
+                }
+            });
+        }
     </script>
 }
