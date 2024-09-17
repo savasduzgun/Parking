@@ -195,7 +195,7 @@
                         res.userName = $("#txtUsername").val();
                         res.fullName = $("#txtFullname").val();
                         res.password = $("#txtPassword").val();
-                        res.isAdmin = $("#dllIsAdmin").val()==0?false:true;
+                        res.isAdmin = $("#ddlIsAdmin").val()==0?false:true;
 
                         $.ajax({
                             url: '/User/Update',
@@ -207,7 +207,8 @@
                                 $("#modalAdd").modal("hide");
 
                                 //DataTable ın ajax kaynağını yeniden request etmesini önlemek için, doğrudan DataTable ın row collectionından ilgili satırı client tarafında güncelleme işlemi
-                                let satir = $(button).parent(parent);
+                                // let satir = $(button).parent(parent);
+                                   let satir = $(button).closest('tr');  // Doğru satırı bulma
                                 DataTable.row(satir).data(updatedUser).draw();
                             }
                         });
