@@ -19,9 +19,9 @@ namespace Parking.Web.Controllers
         }
 
         //Listeleme
-        public IActionResult GetAll() 
+        public IActionResult GetAll()
         {
-            return Json(new {data=_context.PolicyTypes.Where(pt=>!pt.IsDeleted)});
+            return Json(new { data = _context.PolicyTypes.Where(pt => !pt.IsDeleted) });
         }
 
         //Ekleme
@@ -31,6 +31,30 @@ namespace Parking.Web.Controllers
             _context.PolicyTypes.Add(policyType);
             _context.SaveChanges();
             return Ok(policyType);
+        }
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var policyType = _context.PolicyTypes.Find(id);
+            if (policyType != null)
+            {
+                policyType.IsDeleted = true;
+                _context.PolicyTypes.Update(policyType);
+                _context.SaveChanges();
+                return Ok(policyType);
+            }
+            else
+            {
+                return BadRequest("Gönderilen ID geçersizdir.");
+            }
+            
+        }
+        [HttpPost]
+        public IActionResult HardDelete(PolicyType policyType)
+        {
+            _context.PolicyTypes.Remove(policyType);
+            _context.SaveChanges();
+            return Ok();
         }
     }
 }
