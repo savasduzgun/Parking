@@ -19,6 +19,7 @@ namespace Parking.Web.Controllers
         }
 
         //Listeleme
+        [HttpGet]
         public IActionResult GetAll()
         {
             return Json(new { data = _context.PolicyTypes.Where(pt => !pt.IsDeleted) });
@@ -32,6 +33,8 @@ namespace Parking.Web.Controllers
             _context.SaveChanges();
             return Ok(policyType);
         }
+
+        //SoftDelete
         [HttpPost]
         public IActionResult Delete(int id)
         {
@@ -49,10 +52,21 @@ namespace Parking.Web.Controllers
             }
             
         }
+
+        //Silme
         [HttpPost]
         public IActionResult HardDelete(PolicyType policyType)
         {
             _context.PolicyTypes.Remove(policyType);
+            _context.SaveChanges();
+            return Ok();
+        }
+
+        //Update
+        [HttpPost]
+        public IActionResult Update(PolicyType policyType) 
+        {
+            _context.PolicyTypes.Update(policyType);
             _context.SaveChanges();
             return Ok();
         }
