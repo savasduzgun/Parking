@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Parking.Data;
 using Parking.Models;
 
 namespace Parking.Web.Controllers
 {
+    [Authorize(Roles ="Admin")] //Bu sayfaya sadece admin tipi kullanıcılar girebilir.
     public class PolicyTypeController : Controller
     {
         private readonly ApplicationDbContext _context;
