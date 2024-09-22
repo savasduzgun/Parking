@@ -75,8 +75,12 @@
         $(document).ready(function () {
 
             DataTable = $("#tblPolicyTypes").DataTable({
-                ajax:'/PolicyTypes/GetAll',
-
+                ajax:'/PolicyType/GetAll',
+                columns: [
+                    {data:'id', title:'ID'},
+                    { data: 'name', title: 'Poliçe Tipi' },
+                    {data:'id', title:'İşlemler'}
+                ]
             });
 
         });
