@@ -85,6 +85,8 @@
         //arrow function
         $("#btnAdd").click(() => {
             $("#modalAdd").modal("show");
+            //modaldaki form-control classına sahip elementlerin değerlerini sıfırlar
+            $("#modalAdd .form-control").val('');
             $("#modalTitle").text("Yeni Poliçe Tipi Ekle");
 
             //Kaydet butonunun davranışı belirleniyor
