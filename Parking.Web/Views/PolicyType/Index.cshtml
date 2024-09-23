@@ -99,6 +99,7 @@
                     },
                     success: (res) =>{ 
                         $("#modalAdd").modal("hide");
+                        DataTable.row.add(res).draw();
                     } 
                 });
             });
