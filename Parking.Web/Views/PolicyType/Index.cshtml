@@ -89,7 +89,18 @@
 
             //Kaydet butonunun davranışı belirleniyor
             $("#btnSave").text("Kaydet").click(() => { 
-            
+                $.ajax({
+                    url: '/PoliciyType/Add',
+                    type: 'POST',
+                    data: {
+                        policyType: {
+                            name: $("#txtName").val()
+                        }
+                    },
+                    success: (res) =>{ 
+                        $("#modalAdd").modal("hide");
+                    } 
+                });
             });
         });
     </script>
