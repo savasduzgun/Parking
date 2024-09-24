@@ -67,7 +67,7 @@
                     { data: 'name', title: 'Poliçe Tipi' },
                     {
                         data: 'id', title: 'İşlemler', render: (data) => {
-                            return `<a onclick="updatePolicyType(${data}, this)" class="btn uil-pen fs-6 btn-primary"></a> <a onclick="deletePolicyType(${data}, this)" class="btn uil-trash-alt fs-6 btn-danger"></a>`;
+                            return `<a title="Düzenle" onclick="updatePolicyType(${data}, this)" class="btn uil-pen fs-6 btn-primary"></a> <a title="Sil" onclick="deletePolicyType(${data}, this)" class="btn uil-trash-alt fs-6 btn-danger"></a>`;
                         }
                     }
                 ]
