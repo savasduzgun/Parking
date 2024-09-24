@@ -144,7 +144,7 @@
                     } },
                     {
                         data: 'id', title: 'İşlemler', render: function (data) {
-                            return `<a onclick="updateUser(${data}, this)" class="btn uil-pen fs-6 btn-primary"></a> <a onclick="deleteUser(${data}, this)" class="btn uil-trash-alt fs-6 btn-danger"></a>`;
+                            return `<a title="Düzenle" onclick="updateUser(${data}, this)" class="btn uil-pen fs-6 btn-primary"></a> <a title="Sil" onclick="deleteUser(${data}, this)" class="btn uil-trash-alt fs-6 btn-danger"></a>`;
                         }
                     }
                 ]
