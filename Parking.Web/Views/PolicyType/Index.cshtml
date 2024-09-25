@@ -115,5 +115,19 @@
                 });
             }
         }
+
+        function updatePolicyType(policyTypeId, button) {
+
+            $.ajax({
+                url: '/PolicyType/GetById',
+                type: 'POST',
+                data: {
+                    id: policyTypeId
+                },
+                success: (res) => {
+
+                }
+            });
+        }
     </script>
 }
