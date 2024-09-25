@@ -127,6 +127,7 @@
                 success: (res) => {
                     $("#modalAdd").modal("show");
                     $("#modalTitle").text("Poliçe Tipi Güncelle");
+                    $("#txtName").val(res.name);
                 }
             });
         }
