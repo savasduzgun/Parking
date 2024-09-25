@@ -73,30 +73,35 @@
                 ]
             });
 
-        });
-        //arrow function
-        $("#btnAdd").click(() => {
-            $("#modalAdd").modal("show");
-            //modaldaki form-control classına sahip elementlerin değerlerini sıfırlar
-            $("#modalAdd .form-control").val('');
-            $("#modalTitle").text("Yeni Poliçe Tipi Ekle");
+            //arrow function
+            $("#btnAdd").click(() => {
+                $("#modalAdd").modal("show");
+                //modaldaki form-control classına sahip elementlerin değerlerini sıfırlar
+                $("#modalAdd .form-control").val('');
+                $("#modalTitle").text("Yeni Poliçe Tipi Ekle");
 
-            //Kaydet butonunun davranışı belirleniyor
-            $("#btnSave").text("Kaydet").off().click(() => {
-                $.ajax({
-                    url: '/PolicyType/Add',
-                    type: 'POST',
-                    data: {
-                        policyType: {
-                            name: $("#txtName").val()
+                //Kaydet butonunun davranışı belirleniyor
+                $("#btnSave").text("Kaydet").off().click(() => {
+                    $.ajax({
+                        url: '/PolicyType/Add',
+                        type: 'POST',
+                        data: {
+                            policyType: {
+                                name: $("#txtName").val()
+                            }
+                        },
+                        success: (res) => {
+                            $("#modalAdd").modal("hide");
+                            DataTable.row.add(res).draw();
                         }
-                    },
-                    success: (res) => {
-                        $("#modalAdd").modal("hide");
-                        DataTable.row.add(res).draw();
-                    }
+                    });
                 });
             });
+
         });
+
+        function deletePolicyType(policyTypeId,button) {
+
+        }
     </script>
 }

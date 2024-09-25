@@ -17,32 +17,24 @@
 
 
 
-<div
-    class="modal fade"
-    id="modalAdd"
-    tabindex="-1"
-    data-bs-backdrop="static"
-    data-bs-keyboard="false"
-    
-    role="dialog"
-    aria-labelledby="modalTitleId"
-    aria-hidden="true"
->
-    <div
-        class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm"
-        role="document"
-    >
+<div class="modal fade"
+     id="modalAdd"
+     tabindex="-1"
+     data-bs-backdrop="static"
+     data-bs-keyboard="false"
+     role="dialog"
+     aria-labelledby="modalTitleId"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm"
+         role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalTitle">
-                    
                 </h5>
-                <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                ></button>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="mb-3 row">
@@ -67,18 +59,14 @@
 
             </div>
             <div class="modal-footer">
-                <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                >
+                <button type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal">
                     Kapat
                 </button>
-                <button 
-                type="button" 
-                class="btn btn-primary"
-                id="btnSave"
-                >
+                <button type="button"
+                        class="btn btn-primary"
+                        id="btnSave">
                     Kaydet
                 </button>
             </div>
@@ -102,10 +90,10 @@
 
                     let data = {
                         appUser: {
-                            fullName:$("#txtFullname").val(),
-                            userName:$("#txtUsername").val(),
-                            password:$("#txtPassword").val(),
-                            isAdmin:$("#ddlIsAdmin").val()==0?false:true
+                            fullName: $("#txtFullname").val(),
+                            userName: $("#txtUsername").val(),
+                            password: $("#txtPassword").val(),
+                            isAdmin: $("#ddlIsAdmin").val() == 0 ? false : true
                         }
                     }
 
@@ -114,7 +102,7 @@
                         type: 'POST',
                         data: data,
                         success: function (res) {
-                            
+
                             $("#modalAdd").modal("hide");
                             DataTable.row.add(res).draw();
                         }
@@ -124,24 +112,26 @@
 
 
 
-            DataTable= $("#tblUsers").DataTable({
+            DataTable = $("#tblUsers").DataTable({
                 ajax: '/User/GetAll',
                 columns: [
                     { data: 'id', title: 'Id' },
                     { data: 'userName', title: 'Kullanıcı Adı' },
                     { data: 'fullName', title: 'Ad Soyad' },
-                    { data: 'isAdmin', title: 'Admin mi ?', render: function (data) { 
-                        if (data) {
-                            return `<i class="btn uil-check fs-6 btn-success"></i>`;
-                        }
-                        else {
-                             return `<i class="btn uil-times fs-6 btn-danger"></i>`;
-                        }
+                    {
+                        data: 'isAdmin', title: 'Admin mi ?', render: function (data) {
+                            if (data) {
+                                return `<i class="btn uil-check fs-6 btn-success"></i>`;
+                            }
+                            else {
+                                return `<i class="btn uil-times fs-6 btn-danger"></i>`;
+                            }
 
                             // return data ? `<i class="btn uil-check fs-6 btn-success"></i>` : `<i class="btn uil-times fs-6 btn-danger"></i>`
 
-                        
-                    } },
+
+                        }
+                    },
                     {
                         data: 'id', title: 'İşlemler', render: function (data) {
                             return `<a title="Düzenle" onclick="updateUser(${data}, this)" class="btn uil-pen fs-6 btn-primary"></a> <a title="Sil" onclick="deleteUser(${data}, this)" class="btn uil-trash-alt fs-6 btn-danger"></a>`;
@@ -152,27 +142,26 @@
         });
 
         function deleteUser(userId, button) {
-                   
-            if (confirm("Silmek istediğinize emin misiniz ?"))
-              {
-                 $.ajax({
-                    url:'/User/Delete',
-                    type:'POST',
+
+            if (confirm("Silmek istediğinize emin misiniz ?")) {
+                $.ajax({
+                    url: '/User/Delete',
+                    type: 'POST',
                     data: {
                         id: userId
                     },
                     success: function () {
 
                         //DataTable ın ajax kaynağını yeniden request etmesini önlemek için, doğrudan       DataTable ın row collectionından ilgili satırı client tarafında silme işlemi
-                     let satir = $(button).parent().parent();
-                     DataTable.row(satir).remove().draw();
+                        let satir = $(button).parent().parent();
+                        DataTable.row(satir).remove().draw();
                     }
-                 });
-               }
-             }
+                });
+            }
+        }
 
         function updateUser(userId, button) {
-           
+
             $.ajax({
                 url: '/User/GetById',
                 type: 'POST',
@@ -195,7 +184,7 @@
                         res.userName = $("#txtUsername").val();
                         res.fullName = $("#txtFullname").val();
                         res.password = $("#txtPassword").val();
-                        res.isAdmin = $("#ddlIsAdmin").val()==0?false:true;
+                        res.isAdmin = $("#ddlIsAdmin").val() == 0 ? false : true;
 
                         $.ajax({
                             url: '/User/Update',
@@ -208,7 +197,7 @@
 
                                 //DataTable ın ajax kaynağını yeniden request etmesini önlemek için, doğrudan DataTable ın row collectionından ilgili satırı client tarafında güncelleme işlemi
                                 // let satir = $(button).parent(parent);
-                                   let satir = $(button).closest('tr');  // Doğru satırı bulma
+                                let satir = $(button).closest('tr');  // Doğru satırı bulma
                                 DataTable.row(satir).data(updatedUser).draw();
                             }
                         });
