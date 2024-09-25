@@ -131,6 +131,20 @@
 
                     $("#btnSave").text("Düzenle").off().click(() => {
 
+                        res.name = $("#txtName").val();
+
+                        $.ajax({
+                            url: '/PolicyType/Update',
+                            type: 'POST',
+                            data: {
+                                policyType: res
+                            },
+                            success: () => {
+                                let satir = $(button).closest('tr');
+                                DataTable.row(satir).data(res).draw();
+                                $("#modalAdd").modal("hide");
+                            }
+                        });
                     });
                 }
             });
