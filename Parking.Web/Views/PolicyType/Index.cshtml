@@ -102,7 +102,17 @@
 
         function deletePolicyType(policyTypeId,button) {
             if (confirm("Silmek istediğinize emin misiniz ?")) { 
-            
+                $.ajax({
+                    url: '/PolicyType/Delete',
+                    type: 'POST',
+                    data: {
+                        id: policyTypeId
+                    },
+                    success: () => {
+                        let satir = $(button).closest('tr');
+                        DataTable.row(satir).remove().draw();
+                    }
+                });
             }
         }
     </script>
