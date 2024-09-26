@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Parking.Data;
+using Parking.Models;
 
 namespace Parking.Web.Controllers
 {
@@ -20,6 +21,14 @@ namespace Parking.Web.Controllers
         public IActionResult GetAll() 
         { 
             return Json(new {Data = _context.VehicleProcessTypes.Where(vt=>!vt.IsDeleted)});
+        }
+
+        [HttpPost]
+        public IActionResult Add(VehicleType vehicleType) 
+        {
+            _context.VehicleTypes.Add(vehicleType);
+            _context.SaveChanges();
+            return Ok(vehicleType);
         }
     }
 }
