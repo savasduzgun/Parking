@@ -37,7 +37,6 @@ namespace Parking.Web.Controllers
             _context.VehicleTypes.Remove(vehicleType);
             _context.SaveChanges();
             return Ok();
-
         }
     }
 }
