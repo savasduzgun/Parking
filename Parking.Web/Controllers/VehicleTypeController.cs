@@ -47,5 +47,13 @@ namespace Parking.Web.Controllers
             _context.SaveChanges();
             return Ok();
         }
+
+        [HttpPost]
+        public IActionResult Update(VehicleType vehicleType) 
+        {
+            _context.VehicleTypes.Update(vehicleType);
+            _context.SaveChanges();
+            return Ok(vehicleType);
+        }
     }
 }
