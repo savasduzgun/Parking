@@ -38,5 +38,14 @@ namespace Parking.Web.Controllers
             _context.SaveChanges();
             return Ok();
         }
+
+        [HttpPost]
+        public IActionResult Delete(int id) 
+        {
+            var vehicleType = _context.VehicleTypes.Find(id);
+            _context.VehicleTypes.Update(vehicleType);
+            _context.SaveChanges();
+            return Ok();
+        }
     }
 }
