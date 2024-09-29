@@ -55,5 +55,11 @@ namespace Parking.Web.Controllers
             _context.SaveChanges();
             return Ok(vehicleType);
         }
+
+        [HttpPost]
+        public IActionResult GetById(int id) 
+        {
+            return Ok(_context.VehicleTypes.Find(id));
+        }
     }
 }
