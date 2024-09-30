@@ -70,7 +70,7 @@
                     { data: 'name', title: 'Araç Tipleri' },//2.kolon
                     {
                         data: 'id', title: 'İşlemler', render: () => {
-                        
+                            return `<a title="Düzenle" onclick="updateVehicleType(${data}, this)" class="btn uil-pen fs-6 btn-primary"></a> <a title="Sil" onclick="deleteVehicleType(${data}, this)" class="btn uil-trash-alt fs-6 btn-danger"></a>`;
                         }
                     }//3.kolon
                 ]
