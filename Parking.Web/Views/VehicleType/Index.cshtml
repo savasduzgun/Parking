@@ -58,9 +58,23 @@
 
 @section Scripts {
     <script>
+        //Sayfa genelinden ulaşabilmek için set edilir
+        var DataTable = "";
         //Sayfa yüklenirken çalışacak komut
         $(document).ready(() => {
-
+            //Listeleme
+            DataTable = $("#tblVehicleTypes").DataTable({
+                ajax: '/VehicleType/GetAll',
+                columns: [
+                    { data: 'id', title: 'ID' },//1.kolon
+                    { data: 'name', title: 'Araç Tipleri' },//2.kolon
+                    {
+                        data: 'id', title: 'İşlemler', render: () => {
+                        
+                        }
+                    }//3.kolon
+                ]
+            });
         });
     </script>
 }
