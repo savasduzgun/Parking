@@ -85,7 +85,11 @@
                     $.ajax({
                         url: '/VehicleType/Add',
                         type: 'POST',
-
+                        data : {
+                            vehicleType: {
+                                name: $("#txtName").val()
+                            }
+                        },
                     }); //ajax ile bir çağrıda bulunacak ve ayarları bu şekilde olacak
                 });
             });
