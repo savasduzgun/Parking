@@ -92,7 +92,7 @@
                         },
                         success: (res) => {
                             DataTable.row().add(res).draw();
-                            
+                            $("#modalAdd").modal("hide");
                         }
                     }); //ajax ile bir çağrıda bulunacak ve ayarları bu şekilde olacak
                 });
