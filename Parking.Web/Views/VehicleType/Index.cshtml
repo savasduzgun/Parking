@@ -79,6 +79,11 @@
             $("#btnAdd").off().click(() => {
                 $("#modalAdd").modal("show"); //modalı aç
                 $("#modalTitle").text("Araç Tipi Ekle"); //modalın başlığını değiştir
+
+                //Kaydet butonunun davranışı belirleniyor
+                $("#btnSave").text("Kaydet").off().click(() => {
+
+                });
             });
         });
     </script>
