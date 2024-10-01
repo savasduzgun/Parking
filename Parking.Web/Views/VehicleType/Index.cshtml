@@ -90,6 +90,10 @@
                                 name: $("#txtName").val()
                             }
                         },
+                        success: (res) => {
+                            DataTable.row().add(res).draw();
+                            
+                        }
                     }); //ajax ile bir çağrıda bulunacak ve ayarları bu şekilde olacak
                 });
             });
