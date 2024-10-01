@@ -84,6 +84,7 @@
                 $("#btnSave").text("Kaydet").off().click(() => {
                     $.ajax({
                         url: '/VehicleType/Add',
+                        type: 'POST',
 
                     }); //ajax ile bir çağrıda bulunacak ve ayarları bu şekilde olacak
                 });
