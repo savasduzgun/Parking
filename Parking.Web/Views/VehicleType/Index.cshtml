@@ -69,7 +69,7 @@
                     { data: 'id', title: 'ID' },//1.kolon
                     { data: 'name', title: 'Araç Tipleri' },//2.kolon
                     {
-                        data: 'id', title: 'İşlemler', render: () => {
+                        data: 'id', title: 'İşlemler', render: (data) => {
                             return `<a title="Düzenle" onclick="updateVehicleType(${data}, this)" class="btn uil-pen fs-6 btn-primary"></a> <a title="Sil" onclick="deleteVehicleType(${data}, this)" class="btn uil-trash-alt fs-6 btn-danger"></a>`;
                         }//Düzenle ve Sil butonu
                     }//3.kolon
@@ -91,7 +91,7 @@
                             }
                         },
                         success: (res) => {
-                            DataTable.row().add(res).draw();
+                            DataTable.row.add(res).draw();
                             $("#modalAdd").modal("hide");
                         }
                     }); //ajax ile bir çağrıda bulunacak ve ayarları bu şekilde olacak
