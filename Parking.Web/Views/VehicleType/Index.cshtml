@@ -107,7 +107,10 @@
                     data: {
                         id: vehicleTypeId
                     },
-
+                    success: () => {
+                        let satir = $(button).closest('tr');
+                        DataTable.row(satir).remove().draw();
+                    }
                 });
             }
         }
