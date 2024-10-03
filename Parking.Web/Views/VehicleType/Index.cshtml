@@ -125,7 +125,11 @@
                 data: {
                     id: vehicleTypeId
                 },
-
+                success: (res) => {
+                    $("#txtName").val(res.name);
+                    $("#modalAdd").modal("show");
+                    $("#btnSave").text("Düzenle").off().click();
+                }
             });
         }
     </script>
