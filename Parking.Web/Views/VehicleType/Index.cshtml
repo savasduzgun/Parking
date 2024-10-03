@@ -122,6 +122,9 @@
             $.ajax({
                 url: 'VehicleType/GetById',
                 type: 'POST',
+                data: {
+                    id: vehicleTypeId
+                },
 
             });
         }
