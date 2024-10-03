@@ -78,6 +78,8 @@
             //butona click olunduğunda
             $("#btnAdd").off().click(() => {
                 $("#modalAdd").modal("show"); //modalı aç
+                //modaldaki form-control classına sahip elementlerin değerlerini sıfırlar
+                $("#modalAdd .form-control").val('');
                 $("#modalTitle").text("Araç Tipi Ekle"); //modalın başlığını değiştir
 
                 //Kaydet butonunun davranışı belirleniyor

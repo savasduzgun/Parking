@@ -20,7 +20,7 @@ namespace Parking.Web.Controllers
 
         public IActionResult GetAll() 
         { 
-            return Json(new {Data = _context.VehicleProcessTypes.Where(vt=>!vt.IsDeleted)});
+            return Json(new {Data = _context.VehicleTypes.Where(vt=>!vt.IsDeleted)});
         }
 
         [HttpPost]
