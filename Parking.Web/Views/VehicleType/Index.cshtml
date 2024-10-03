@@ -118,8 +118,9 @@
         }
 
         function updateVehicleType(vehicleTypeId, button) {
+            //update edilecek nesne veritabanından çekilir.
             $.ajax({
-                url: 'VehicleType/Update',
+                url: 'VehicleType/GetById',
                 
             });
         }
