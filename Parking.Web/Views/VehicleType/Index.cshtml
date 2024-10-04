@@ -129,10 +129,15 @@
                     $("#txtName").val(res.name);
                     $("#modalAdd").modal("show");
                     $("#btnSave").text("Düzenle").off().click(()=>{
+                        //Kaydet dendiğinde bize db den gelen res e text box ın içindeki değeri res e set eder
+                        res.name = $("#txtName").val();
+
                         $.ajax({
                             url: '/VehicleType/Update',
                             type: 'POST',
-
+                            data: {
+                                vehicleType: res //backende istenen vehicleType res
+                            }
                         });
                     });
                 }
