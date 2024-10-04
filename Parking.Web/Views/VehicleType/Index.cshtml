@@ -141,6 +141,7 @@
                             success: () => {
                                 $("#modalAdd").modal("hide");
                                 let satir = $(button).closest('tr');
+                                DataTable.row(satir).data(res).draw();
                             }
                         });
                     });
