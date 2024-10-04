@@ -137,6 +137,9 @@
                             type: 'POST',
                             data: {
                                 vehicleType: res //backende istenen vehicleType res
+                            },
+                            success: () => {
+                                $("#modalAdd").modal("hide");
                             }
                         });
                     });
