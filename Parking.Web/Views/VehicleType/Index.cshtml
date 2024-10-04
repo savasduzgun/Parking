@@ -131,6 +131,7 @@
                     $("#btnSave").text("Düzenle").off().click(()=>{
                         $.ajax({
                             url: '/VehicleType/Update',
+                            type: 'POST',
 
                         });
                     });
