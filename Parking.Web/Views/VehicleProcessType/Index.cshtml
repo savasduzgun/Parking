@@ -1,5 +1,156 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿<div class="row">
+    <div class="col-12">
+
+        <div class="card">
+            <div class="card-header bg-soft-success text-dark text-center d-flex">
+                <div class="col-11" text-center fs-3 text-dark>İşlem Tipleri</div>
+                <div class="col-1 fs-3"><a href="#" id="btnAdd" class="btn btn-success"><i class="uil uil-plus me-2"></i>Yeni Kayıt</a></div>
+            </div>
+            <div class="card-body">
+                <table id="tblVehicleProcessTypes" class="table table-bordered table-striped table-hover">
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade"
+     id="modalAdd"
+     tabindex="-1"
+     data-bs-backdrop="static"
+     data-bs-keyboard="false"
+     role="dialog"
+     aria-labelledby="modalTitleId"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm"
+         role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">
+                </h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3 row">
+                    <input type="text" class="form-control" id="txtName" placeholder="İşlem tipi adını giriniz">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+                    Kapat
+                </button>
+                <button type="button"
+                        class="btn btn-primary"
+                        id="btnSave">
+                    Kaydet
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var DataTable = "";
+        $(document).ready(() => {
+            //Sayfa hazır olduğunda ekran
+            DataTable = $("#tblVehicleProcessTypes").DataTable({
+                ajax: '/VehicleProcessType/GetAll',
+                columns: [
+                    { data: 'id', title: 'ID' },
+                    { data: 'name', title: 'İşlem Tipi Adı' },
+                    {
+                        data: 'id', title: 'İşlemler', render: (data) => {
+                            return `<a onclick="updateVehicleProcessType(${data},this)" title="Düzenle" class="btn uil-pen fs-6 btn-primary"></a> <a title="Sil" onclick="deleteVehicleProcessType(${data},this)" class="btn uil-trash-alt fs-6 btn-danger"></a> `
+                        }
+                    }
+                ]
+            });
+            //btnAdd butonu aktif ediliyor
+            $("#btnAdd").click(() => {
+                $("#modalAdd").modal("show");
+                //modaldaki form-control classına sahip elementlerin değerlerini sıfırlar
+                $("#modalAdd .form-control").val('');
+                $("#modalTitle").text("Yeni İşlem Tipi Ekle");
+
+                //Kaydet butonunun davranışı belirleniyor
+                $("#btnSave").text("Kaydet").off().click(() => {
+                    $.ajax({
+                        url: '/VehicleProcessType/Add',
+                        type: 'POST',
+                        data: {
+                            vehicleProcessType: {
+                                name: $("#txtName").val()
+                            }
+                        },
+                        success: (res) => {
+
+                            DataTable.row.add(res).draw();
+                            $("#modalAdd").modal("hide");
+                        }
+                    });
+                });
+            });
+
+
+        });
+
+        function deleteVehicleProcessType(vehicleProcessTypeId, button) {
+
+            if (confirm("Silmek istediğinize emin misiniz ? ")) {
+
+                $.ajax({
+                    url: '/VehicleProcessType/Delete',
+                    type: 'POST',
+                    data: {
+                        id: vehicleProcessTypeId
+                    },
+                    success: () => {
+                        let satir = $(button).parent().parent();
+                        DataTable.row(satir).remove().draw();
+                    }
+                });
+            }
+        }
+
+        function updateVehicleProcessType(vehicleProcessTypeId, button) {
+            //GetById ile veri alınır
+            $.ajax({
+                url: '/VehicleProcessType/GetById',
+                type: 'POST',
+                data: {
+                    id: vehicleProcessTypeId
+                },
+                //veri alma başarılı olduğunda res e set edilerek işlem yapılır
+                success: (res) => {
+                    $("#txtName").val(res.name);
+                    $("#modalAdd").modal("show");
+                    $("#modalTitle").text("İşlem Tipi Düzenle");
+
+                    $("#btnSave").text("Düzenle").off().click(() => {
+                        res.name = $("#txtName").val();
+
+                        $.ajax({
+                            url: '/VehicleProcessType/Update',
+                            type: 'POST',
+                            data: {
+                                vehicleProcessType: res
+                            },
+                            success: () => {
+                                let satir = $(button).parent().parent();
+                                DataTable.row(satir).data(res).draw();
+                                $("#modalAdd").modal("hide");
+                            }
+                        });
+                    });
+                }
+            });
+        }
+    </script>
 }
