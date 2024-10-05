@@ -49,5 +49,13 @@ namespace Parking.Web.Controllers
             _context.SaveChanges();
             return Ok();
         }
+
+        [HttpPost]
+        public IActionResult HardDelete(VehicleProcessType vehicleProcessType)
+        {
+            _context.VehicleProcessTypes.Remove(vehicleProcessType);
+            _context.SaveChanges();
+            return Ok();
+        }
     }
 }
