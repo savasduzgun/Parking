@@ -16,5 +16,10 @@ namespace Parking.Web.Controllers
         {
             return View();
         }
+
+        public IActionResult GetAll()
+        {
+            return Json(new { Data = _context.VehicleProcessTypes.Where(vpt => !vpt.IsDeleted).ToList() });
+        }
     }
 }
