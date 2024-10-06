@@ -86,9 +86,9 @@
                         </div>
                     </div>
 
-                    
 
-                    
+
+
 
                     <div class="dropdown d-none d-lg-inline-block ms-1">
                         <button type="button" class="btn header-item noti-icon waves-effect" data-bs-toggle="fullscreen">
@@ -102,7 +102,7 @@
                             <i class="uil-bell"></i>
                             <span class="badge bg-danger rounded-pill">3</span>
                         </button>
-                     
+
                     </div>
 
                     <div class="dropdown d-inline-block">
@@ -115,7 +115,7 @@
                         </button>
                         <div class="dropdown-menu dropdown-menu-end">
                             <!-- item-->
-                       
+
                             <a class="dropdown-item" asp-controller="User" asp-action="Logout"><i class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Çıkış Yap</span></a>
                         </div>
                     </div>
@@ -180,13 +180,22 @@
                                 </a>
                                 <ul class="sub-menu" aria-expanded="true">
 
-                                    <li><a asp-controller="PolicyType" asp-action="Index">Poliçe Tipleri</a></li>
+                                    <li>
+                                        <a asp-controller="PolicyType" asp-action="Index">Poliçe Tipleri</a>
+                                    </li>
                                     <li><a asp-controller="VehicleType" asp-action="Index">Araç Tipleri</a></li>
                                     <li><a asp-controller="VehicleProcessType" asp-action="Index">İşlem Tipleri</a></li>
-
+                                   
                                 </ul>
                             </li>
-                        }                                          
+
+                            <li>
+                                <a asp-controller="Vehicle" asp-action="Index">
+                                    <i class="uil-window-section"></i>
+                                    <span>Araçlar</span>
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </div>
                 <!-- Sidebar -->
@@ -201,7 +210,7 @@
             <div class="page-content">
                 <div class="container-fluid">
 
-                   @RenderBody()
+                    @RenderBody()
 
                 </div> <!-- container-fluid -->
             </div>
@@ -227,9 +236,6 @@
 
     </div>
     <!-- END layout-wrapper -->
-   
-   
-
     <!-- JAVASCRIPT -->
     <script src="~/assets/libs/jquery/jquery.min.js"></script>
     <script src="~/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -239,7 +245,7 @@
     <script src="~/assets/libs/waypoints/lib/jquery.waypoints.min.js"></script>
     <script src="~/assets/libs/jquery.counterup/jquery.counterup.min.js"></script>
 
-    
+
 
     <!-- App js -->
     <script src="~/assets/js/app.js"></script>
