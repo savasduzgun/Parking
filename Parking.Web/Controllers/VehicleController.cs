@@ -43,5 +43,13 @@ namespace Parking.Web.Controllers
                 return Json(new { data = result });
             }
         }
+
+        [HttpPost]
+        public IActionResult Add(Vehicle vehicle) 
+        {
+            _context.Vehicles.Add(vehicle);
+            _context.SaveChanges();
+            return Ok(vehicle);
+        }
     }
 }
