@@ -73,5 +73,13 @@ namespace Parking.Web.Controllers
             _context.SaveChanges();
             return Ok(vehicle);
         }
+
+        [HttpPost]
+        public IActionResult HardDelete(Vehicle vehicle)
+        {  
+            _context.Vehicles.Remove(vehicle);
+            _context.SaveChanges();
+            return Ok();
+        }
     }
 }
