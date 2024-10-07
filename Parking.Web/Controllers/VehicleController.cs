@@ -22,7 +22,7 @@ namespace Parking.Web.Controllers
             return View();
         }
 
-        public IActionResult GettAll() 
+        public IActionResult GetAll() 
         {
             //Bu satırda, kullanıcı rolü kontrol ediliyor. Eğer giriş yapan kullanıcı Admin rolüne sahipse, aşağıdaki işlemler yapılacak. Aksi durumda, normal bir kullanıcı olarak kabul edilecek ve farklı bir sorgu çalıştırılacak.
             if (User.IsInRole("Admin"))
