@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Parking.Data;
+using Parking.Models;
+using System.Security.Claims;
 
 namespace Parking.Web.Controllers
 {
@@ -17,6 +19,29 @@ namespace Parking.Web.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        public IActionResult GettAll() 
+        {
+            if (User.IsInRole("Admin"))
+            {
+                var result = _context.Vehicles.Where(v => !v.IsDeleted).Select(v => new Vehicle
+                {
+                    Name = v.Name,
+                    Odometer = v.Odometer,
+                    Id = v.Id,
+                    LicensePlate = v.LicensePlate,
+                    VehicleType = v.VehicleType,
+                    AppUser = v.AppUser
+                });
+                return Json(new { data = result });
+            }
+            else 
+            {
+                int appUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                var result = _context.Vehicles.Where(v => !v.IsDeleted && v.AppUserId == appUserId);
+                return Json(new { data = result });
+            }
         }
     }
 }
