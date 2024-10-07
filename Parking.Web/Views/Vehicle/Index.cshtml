@@ -77,20 +77,80 @@
 
 @section Scripts {
     <script>
-        var DataTable;
+        var DataTable = "";
         $(document).ready(() => {
             DataTable = $("#tblVehicles").DataTable({
                 ajax: '/Vehicle/GetAll',
-                columns:[
-                    {},
-                    {},
-                    {},
-                    {},
-                    {},
-                    {},
-                    {}
+                columns: [
+                    { data: 'id', title: 'ID' },
+                    { data: 'name', title: 'Araç Adı' },
+                    { data: 'licensePlate', title: 'Plaka' },
+                    { data: 'odometer', title: 'Km' },
+                    { data: 'vehicleType.name', title: 'Araç Tipi' },
+                    { data: 'appUser.username', title: 'Araç Sahibi' },
+                    {
+                        data: 'id', title: 'İşlemler', render: (data) => {
+                            return `<a onclick="updateVehicle(${data},this)" title="Düzenle" class="btn uil-pen fs-6 btn-primary"></a> <a title="Sil" onclick="deleteVehicle(${data},this)" class="btn uil-trash-alt fs-6 btn-danger"></a> `
+                        }
+                    }
                 ]
-            })
+            });
+
+            $("#btnAdd").click(() => {
+                $("#modalAdd").modal("show");
+                fillVehicleTypes();
+
+                if ("@User.IsInRole("Admin")" == "True") {
+                    fillUsers();
+                }
+
+                $("#btnSave").click(() => {
+                    let vehicle = {
+                        licensePlate: $("#txtLicensePlate").val(),
+                        name: $("#txtName").val(),
+                        odometer: $("#txtOdometer").val(),
+                        vehicleTypeId: $("#ddlVehicleType").val(),
+                        appUserId: $("#ddlUser").val()
+                    }
+                    $.ajax({
+                        url: '/Vehicle/Add',
+                        type: 'POST',
+                        data: {
+                            vehicle: vehicle
+                        },
+                        success: (res) => {
+                            DataTable.row.add(res).draw();
+                            $("#modalAdd").modal("hide");
+                        }
+                    });
+                });
+            });
         });
+
+        function fillVehicleTypes() {
+            $.ajax({
+                url: '/VehicleType/GetAll',
+                type: 'GET',
+                success: (res) => {
+                    $("#ddlVehicleType").empty();
+                    for (var item of res.data) {
+                        $("#ddlVehicleType").append(new Option(item.name, item.id));
+                    }
+                }
+            });
+        }
+
+        function fillUsers() {
+            $.ajax({
+                url: '/User/GetAll',
+                type: 'GET',
+                success: (res) => {
+                    $("#ddlUser").empty();
+                    for (var item of res.data) {
+                        $("#ddlUser").append(new Option(item.fullName, item.id));
+                    }
+                }
+            });
+        }
     </script>
 }
