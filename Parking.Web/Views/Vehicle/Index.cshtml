@@ -50,6 +50,14 @@
                     <select class="form-select" id="ddlVehicleType">
                     </select>
                 </div>
+                @if (User.IsInRole("Admin"))
+                {
+                    <div class="mb-3 row">
+                        <label class="form-label">Kullanıcı Adı</label>
+                        <select class="form-select" id="ddlUser">
+                        </select>
+                    </div>
+                }
             </div>
             <div class="modal-footer">
                 <button type="button"
@@ -66,3 +74,23 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        var DataTable;
+        $(document).ready(() => {
+            DataTable = $("#tblVehicles").DataTable({
+                ajax: '/Vehicle/GetAll',
+                columns:[
+                    {},
+                    {},
+                    {},
+                    {},
+                    {},
+                    {},
+                    {}
+                ]
+            })
+        });
+    </script>
+}
