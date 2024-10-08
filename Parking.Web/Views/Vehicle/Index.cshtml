@@ -87,7 +87,7 @@
                     { data: 'licensePlate', title: 'Plaka' },
                     { data: 'odometer', title: 'Km' },
                     { data: 'vehicleType.name', title: 'Araç Tipi' },
-                    { data: 'appUser.username', title: 'Araç Sahibi' },
+                    { data: 'appUser.userName', title: 'Araç Sahibi' },
                     {
                         data: 'id', title: 'İşlemler', render: (data) => {
                             return `<a onclick="updateVehicle(${data},this)" title="Düzenle" class="btn uil-pen fs-6 btn-primary"></a> <a title="Sil" onclick="deleteVehicle(${data},this)" class="btn uil-trash-alt fs-6 btn-danger"></a> `
@@ -98,13 +98,19 @@
 
             $("#btnAdd").click(() => {
                 $("#modalAdd").modal("show");
+
+                //modaldaki form-control classına sahip elementlerin değerlerini sıfırlar
+                $("#modalAdd .form-control").val('');
+                //$("#modalAdd .form-label").val('');
+                $("#modalTitle").text("Yeni Araç Ekle");
+
                 fillVehicleTypes();
 
                 if ("@User.IsInRole("Admin")" == "True") {
                     fillUsers();
                 }
 
-                $("#btnSave").click(() => {
+                $("#btnSave").off().click(() => {
                     let vehicle = {
                         licensePlate: $("#txtLicensePlate").val(),
                         name: $("#txtName").val(),
