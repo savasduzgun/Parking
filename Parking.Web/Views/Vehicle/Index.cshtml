@@ -133,6 +133,24 @@
             });
         });
 
+        function deleteVehicle(vehicleId, button) {
+
+            if (confirm("Silmek istediğinize emin misiniz ? ")) {
+
+                $.ajax({
+                    url: '/Vehicle/Delete',
+                    type: 'POST',
+                    data: {
+                        id: vehicleId
+                    },
+                    success: () => {
+                        let satir = $(button).parent().parent();
+                        DataTable.row(satir).remove().draw();
+                    }
+                });
+            }
+        }
+
         function fillVehicleTypes() {
             $.ajax({
                 url: '/VehicleType/GetAll',
