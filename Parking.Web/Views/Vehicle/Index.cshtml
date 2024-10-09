@@ -1,4 +1,5 @@
-﻿<div class="row">
+﻿@using System.Security.Claims
+<div class="row">
     <div class="col-12">
 
         <div class="card">
@@ -101,7 +102,7 @@
 
                 //modaldaki form-control classına sahip elementlerin değerlerini sıfırlar
                 $("#modalAdd .form-control").val('');
-                //$("#modalAdd .form-label").val('');
+                $("#modalAdd .form-select").val('');
                 $("#modalTitle").text("Yeni Araç Ekle");
 
                 fillVehicleTypes();
@@ -111,12 +112,22 @@
                 }
 
                 $("#btnSave").off().click(() => {
+
+                    if ("@User.IsInRole("Admin")" == "True") {
+                        appUserId = $("#ddlUser").val();
+
+                    }
+                    else {
+                        appUserId = parseInt(@User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                    }
+
+
                     let vehicle = {
                         licensePlate: $("#txtLicensePlate").val(),
                         name: $("#txtName").val(),
                         odometer: $("#txtOdometer").val(),
                         vehicleTypeId: $("#ddlVehicleType").val(),
-                        appUserId: $("#ddlUser").val()
+                        appUserId: appUserId
                     }
                     $.ajax({
                         url: '/Vehicle/Add',
@@ -125,8 +136,14 @@
                             vehicle: vehicle
                         },
                         success: (res) => {
+                            res.vehicleType = {
+                                name: $("#ddlVehicleType option:selected").text()
+                            }
+                            res.appUser = {
+                                userName: $("#ddlUser option:selected").text()
+                            }
                             DataTable.row.add(res).draw();
-                            $("#modalAdd").modal("hide");
+                            $("#modal").modal("hide");
                         }
                     });
                 });
@@ -145,10 +162,50 @@
                     },
                     success: () => {
                         let satir = $(button).parent().parent();
-                        DataTable.row(satir).remove().draw();
+                        DataTable.row(satir).remove().draw(false);
                     }
                 });
             }
+        }
+
+        function updateVehicle(vehicleId, button) {
+            fillVehicleTypes();
+            fillUsers();
+            //GetById ile veri alınır
+            $.ajax({
+                url: '/Vehicle/GetById',
+                type: 'POST',
+                data: {
+                    id: vehicleId
+                },
+                //veri alma başarılı olduğunda res e set edilerek işlem yapılır
+                success: (res) => {
+                    $("#txtName").val(res.name);
+                    $("#modalAdd").modal("show");
+                    $("#modalTitle").text("Araç Düzenle");
+
+                    $("#btnSave").text("Düzenle").off().click(() => {
+                        res.name = $("#txtName").val();
+                        res.odometer = $("#txtOdometer").val();
+                        res.licensePlate = $("#txtLicensePlate").val();
+                        res.vehicleTypeId = $("#dllVehicleType").val();
+                        // res.appUserId = $("#dllUser").val();
+
+                        $.ajax({
+                            url: '/Vehicle/Update',
+                            type: 'POST',
+                            data: {
+                                vehicle: res
+                            },
+                            success: () => {
+                                let satir = $(button).parent().parent();
+                                DataTable.row(satir).data(res).draw();
+                                $("#modalAdd").modal("hide");
+                            }
+                        });
+                    });
+                }
+            });
         }
 
         function fillVehicleTypes() {
@@ -157,6 +214,7 @@
                 type: 'GET',
                 success: (res) => {
                     $("#ddlVehicleType").empty();
+                    $("#ddlVehicleType").append(new Option("Lütfen seçim yapınız", 0));
                     for (var item of res.data) {
                         $("#ddlVehicleType").append(new Option(item.name, item.id));
                     }
@@ -170,6 +228,7 @@
                 type: 'GET',
                 success: (res) => {
                     $("#ddlUser").empty();
+                    $("#ddlUser").append(new Option("Lütfen seçim yapınız", 0));
                     for (var item of res.data) {
                         $("#ddlUser").append(new Option(item.fullName, item.id));
                     }
