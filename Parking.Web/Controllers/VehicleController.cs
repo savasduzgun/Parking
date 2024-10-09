@@ -7,7 +7,7 @@ using System.Security.Claims;
 
 namespace Parking.Web.Controllers
 {
-    [Authorize]
+    [Authorize] //Bu controller ı sadece authorize olanlar çağırabilir. //Hem admin hem users görüntüleyeceği için login olanlar görebilsin diye
     public class VehicleController : Controller
     {
         private readonly ApplicationDbContext _context;
