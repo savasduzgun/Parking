@@ -49,6 +49,7 @@
                 <div class="mb-3 row">
                     <label class="form-label">Araç Tipi</label>
                     <select class="form-select" id="ddlVehicleType">
+
                     </select>
                 </div>
                 @if (User.IsInRole("Admin"))
@@ -56,6 +57,7 @@
                     <div class="mb-3 row">
                         <label class="form-label">Kullanıcı Adı</label>
                         <select class="form-select" id="ddlUser">
+
                         </select>
                     </div>
                 }
@@ -80,7 +82,9 @@
     <script>
         var DataTable = "";
         $(document).ready(() => {
+            //tblVehicles tablosunun datatable özelliği aktif ediliyor.
             DataTable = $("#tblVehicles").DataTable({
+                //buradaki ajax url veren DataTable parametresi
                 ajax: '/Vehicle/GetAll',
                 columns: [
                     { data: 'id', title: 'ID' },
@@ -208,12 +212,13 @@
             });
         }
 
+        //Vehicle type ların dolu gelmesini sağlar.
         function fillVehicleTypes() {
             $.ajax({
                 url: '/VehicleType/GetAll',
                 type: 'GET',
                 success: (res) => {
-                    $("#ddlVehicleType").empty();
+                    $("#ddlVehicleType").empty(); //her seferinde üzerine yüklemesin
                     $("#ddlVehicleType").append(new Option("Lütfen seçim yapınız", 0));
                     for (var item of res.data) {
                         $("#ddlVehicleType").append(new Option(item.name, item.id));
@@ -222,6 +227,7 @@
             });
         }
 
+        //Kullanıcılar dropdown dolu gelmesi için
         function fillUsers() {
             $.ajax({
                 url: '/User/GetAll',
