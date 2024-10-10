@@ -12,5 +12,6 @@ namespace Parking.Repository.Shared.Abstract
         T GetById(int id);
         T Add(T entity);
         T Update(T entity);
+        T DeleteById(int id);
     }
 }
