@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Parking.Repository.Shared.Abstract
 {
-    public interface IRepository
+    public interface IRepository<T> where T : class
     {
     }
 }
