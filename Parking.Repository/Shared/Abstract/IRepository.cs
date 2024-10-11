@@ -9,7 +9,7 @@ namespace Parking.Repository.Shared.Abstract
 {
     public interface IRepository<T> where T : class
     {
-        IEnumerable<T> GetAll();
+        IEnumerable<T> GetAll(bool v, int v1);
         T GetById(int id);
         T GetFirstOrDefault(Expression<Func<T, bool>> filter);
         T Add(T entity);
