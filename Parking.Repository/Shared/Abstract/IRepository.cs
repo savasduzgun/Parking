@@ -16,5 +16,6 @@ namespace Parking.Repository.Shared.Abstract
         T Update(T entity);
         T DeleteById(int id);
         T Delete(T entity);
+        void Save();
     }
 }
