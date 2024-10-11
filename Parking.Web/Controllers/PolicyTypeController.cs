@@ -2,17 +2,18 @@
 using Microsoft.AspNetCore.Mvc;
 using Parking.Data;
 using Parking.Models;
+using Parking.Repository.Shared.Abstract;
 
 namespace Parking.Web.Controllers
 {
     [Authorize(Roles ="Admin")] //Bu sayfaya sadece admin tipi kullanıcılar girebilir.
     public class PolicyTypeController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IRepository<PolicyType> _policyTypeRepo;
 
-        public PolicyTypeController(ApplicationDbContext context)
+        public PolicyTypeController(IRepository<PolicyType> policyTypeRepo)
         {
-            _context = context;
+            _policyTypeRepo = policyTypeRepo;
         }
 
         public IActionResult Index()
