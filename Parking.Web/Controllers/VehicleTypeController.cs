@@ -60,8 +60,10 @@ namespace Parking.Web.Controllers
         [HttpPost]
         public IActionResult Update(VehicleType vehicleType) 
         {
-            _context.VehicleTypes.Update(vehicleType);
-            _context.SaveChanges();
+            //_context.VehicleTypes.Update(vehicleType);
+            //_context.SaveChanges();
+            _vehicleTypeRepo.Update(vehicleType);
+            _vehicleTypeRepo.Save();
             return Ok(vehicleType);
         }
 
