@@ -1,4 +1,5 @@
-﻿using Parking.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Parking.Data;
 using Parking.Repository.Shared.Abstract;
 using System;
 using System.Collections.Generic;
@@ -12,15 +13,18 @@ namespace Parking.Repository.Shared.Concrete
     public class Repository<T> : IRepository<T> where T : class
     {
         private readonly ApplicationDbContext _context;
+        private readonly DbSet<T> _dbSet;
 
         public Repository(ApplicationDbContext context)
         {
             _context = context;
+            _dbSet= context.Set<T>();
         }
 
         public T Add(T entity)
         {
-            throw new NotImplementedException();
+            _dbSet.Add(entity);
+            return entity;
         }
 
         public T Delete(T entity)
