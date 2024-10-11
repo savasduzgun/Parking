@@ -47,11 +47,13 @@ namespace Parking.Web.Controllers
         [HttpPost]
         public IActionResult Delete(int id) 
         {
-            var vehicleType = _context.VehicleTypes.Find(id);
-            vehicleType.IsDeleted = true;
-            vehicleType.DateDeleted = DateTime.Now;
-            _context.VehicleTypes.Update(vehicleType);
-            _context.SaveChanges();
+            //var vehicleType = _context.VehicleTypes.Find(id);
+            //vehicleType.IsDeleted = true;
+            //vehicleType.DateDeleted = DateTime.Now;
+            //_context.VehicleTypes.Update(vehicleType);
+            //_context.SaveChanges();
+            _vehicleTypeRepo.DeleteById(id);
+            _vehicleTypeRepo.Save();
             return Ok();
         }
 

@@ -38,6 +38,8 @@ namespace Parking.Repository.Shared.Concrete
         {
            T entity= _dbSet.Find(id);
             entity.IsDeleted= true;
+            entity.DateDeleted= DateTime.Now;
+            _dbSet.Update(entity);
             return entity;
 
         }
