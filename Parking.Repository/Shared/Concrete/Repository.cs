@@ -49,7 +49,7 @@ namespace Parking.Repository.Shared.Concrete
 
         public T GetById(int id)
         {
-            throw new NotImplementedException();
+            return _dbSet.Find(id);
         }
 
         public T GetFirstOrDefault(Expression<Func<T, bool>> filter)
