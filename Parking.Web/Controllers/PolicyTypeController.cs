@@ -34,8 +34,9 @@ namespace Parking.Web.Controllers
         [HttpPost]
         public IActionResult Add(PolicyType policyType)
         {
-            _context.PolicyTypes.Add(policyType);
-            _context.SaveChanges();
+            //_context.PolicyTypes.Add(policyType);
+            //_context.SaveChanges();
+            _policyTypeRepo.Add(policyType);
             return Ok(policyType);
         }
 
