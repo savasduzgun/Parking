@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Parking.Data;
+using Parking.Models;
 using Parking.Repository.Shared.Abstract;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Parking.Repository.Shared.Concrete
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : BaseModel
     {
         private readonly ApplicationDbContext _context;
         private readonly DbSet<T> _dbSet;
@@ -34,7 +35,10 @@ namespace Parking.Repository.Shared.Concrete
 
         public T DeleteById(int id)
         {
-            throw new NotImplementedException();
+           T entity= _dbSet.Find(id);
+            entity.IsDeleted= true;
+            return entity;
+
         }
 
         public IEnumerable<T> GetAll()
