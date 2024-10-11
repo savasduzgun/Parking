@@ -54,7 +54,7 @@ namespace Parking.Repository.Shared.Concrete
 
         public T GetFirstOrDefault(Expression<Func<T, bool>> filter)
         {
-            throw new NotImplementedException();
+            return _dbSet.FirstOrDefault(filter);
         }
 
         public T Update(T entity)
