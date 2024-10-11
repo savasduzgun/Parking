@@ -43,7 +43,8 @@ namespace Parking.Repository.Shared.Concrete
 
         public IEnumerable<T> GetAll()
         {
-            throw new NotImplementedException();
+            return _dbSet.Where(x => !x.IsDeleted).ToList();
+            
         }
 
         public T GetById(int id)
