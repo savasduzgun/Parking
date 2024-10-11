@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Parking.Data;
 using Parking.Models;
 using Parking.Repository.Shared.Abstract;
@@ -25,7 +26,8 @@ namespace Parking.Web.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Json(new { data = _context.PolicyTypes.Where(pt => !pt.IsDeleted) });
+            //return Json(new { data = _context.PolicyTypes.Where(pt => !pt.IsDeleted) });
+            return Json(new { data = _policyTypeRepo.GetAll()});
         }
 
         //Ekleme
