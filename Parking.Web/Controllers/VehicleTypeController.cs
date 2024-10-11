@@ -27,8 +27,10 @@ namespace Parking.Web.Controllers
         [HttpPost]
         public IActionResult Add(VehicleType vehicleType) 
         {
-            _context.VehicleTypes.Add(vehicleType);
-            _context.SaveChanges();
+            //_context.VehicleTypes.Add(vehicleType);
+            //_context.SaveChanges();
+            _vehicleTypeRepo.Add(vehicleType);
+            _vehicleTypeRepo.Save();
             return Ok(vehicleType);
         }
 
