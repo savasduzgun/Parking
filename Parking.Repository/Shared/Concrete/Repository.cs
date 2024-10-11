@@ -25,12 +25,14 @@ namespace Parking.Repository.Shared.Concrete
         public T Add(T entity)
         {
             _dbSet.Add(entity);
+            Save();
             return entity;
         }
 
         public T Delete(T entity)
         {
             _dbSet.Remove(entity);
+            Save() ;
             return entity;
         }
 
@@ -40,6 +42,7 @@ namespace Parking.Repository.Shared.Concrete
             entity.IsDeleted= true;
             entity.DateDeleted= DateTime.Now;
             _dbSet.Update(entity);
+            Save();
             return entity;
 
         }
@@ -63,6 +66,7 @@ namespace Parking.Repository.Shared.Concrete
         public T Update(T entity)
         {
             _dbSet.Update(entity);
+            Save();
             return entity;
         }
 
