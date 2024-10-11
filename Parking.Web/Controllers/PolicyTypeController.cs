@@ -44,17 +44,26 @@ namespace Parking.Web.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            var policyType = _context.PolicyTypes.Find(id);
-            if (policyType != null)
+            //var policyType = _context.PolicyTypes.Find(id);
+            //if (policyType != null)
+            //{
+            //    policyType.IsDeleted = true;
+            //    _context.PolicyTypes.Update(policyType);
+            //    _context.SaveChanges();
+            //    return Ok(policyType);
+            //}
+            //else
+            //{
+            //    return BadRequest("Gönderilen ID geçersizdir.");
+            //}
+            var result = _policyTypeRepo.DeleteById(id);
+            if (result != null)
             {
-                policyType.IsDeleted = true;
-                _context.PolicyTypes.Update(policyType);
-                _context.SaveChanges();
-                return Ok(policyType);
+                return Ok(result);
             }
-            else
+            else 
             {
-                return BadRequest("Gönderilen ID geçersizdir.");
+                return BadRequest("Gödeilen ID geçersizdir.");
             }
             
         }
@@ -63,8 +72,9 @@ namespace Parking.Web.Controllers
         [HttpPost]
         public IActionResult HardDelete(PolicyType policyType)
         {
-            _context.PolicyTypes.Remove(policyType);
-            _context.SaveChanges();
+            //_context.PolicyTypes.Remove(policyType);
+            //_context.SaveChanges();
+            _policyTypeRepo.Delete(policyType);
             return Ok();
         }
 
