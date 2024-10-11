@@ -59,7 +59,7 @@ namespace Parking.Repository.Shared.Concrete
 
         public void Save()
         {
-            throw new NotImplementedException();
+            _context.SaveChanges();
         }
     }
 }
