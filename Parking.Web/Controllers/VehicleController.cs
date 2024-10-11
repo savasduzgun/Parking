@@ -37,7 +37,7 @@ namespace Parking.Web.Controllers
             bool isAdmin = User.IsInRole("Admin");
             int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            return Json(new { data = _vehicleRepository.GetAll(isAdmin, userId)});
+            return Json(new {data =_vehicleRepository.GetAll(), userId = userId});
          
             /*
 
