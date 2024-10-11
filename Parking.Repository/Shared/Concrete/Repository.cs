@@ -30,7 +30,8 @@ namespace Parking.Repository.Shared.Concrete
 
         public T Delete(T entity)
         {
-            throw new NotImplementedException();
+            _dbSet.Remove(entity);
+            return entity;
         }
 
         public T DeleteById(int id)
