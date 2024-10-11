@@ -1,16 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Parking.Data;
 using Parking.Models;
+using Parking.Repository.Shared.Abstract;
 
 namespace Parking.Web.Controllers
 {
     public class VehicleTypeController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IRepository<VehicleType> _vehicleTypeRepo;
 
-        public VehicleTypeController(ApplicationDbContext context)
+        public VehicleTypeController(IRepository<VehicleType> vehicleTypeRepo)
         {
-            _context = context;
+            _vehicleTypeRepo = vehicleTypeRepo;
         }
 
         public IActionResult Index()
