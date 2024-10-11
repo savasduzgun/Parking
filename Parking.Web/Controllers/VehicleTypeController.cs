@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Parking.Models;
 using Parking.Repository.Shared.Abstract;
 
@@ -70,7 +71,8 @@ namespace Parking.Web.Controllers
         [HttpPost]
         public IActionResult GetById(int id) 
         {
-            return Ok(_context.VehicleTypes.Find(id));
+            //return Ok(_context.VehicleTypes.Find(id));
+            return Ok(_vehicleTypeRepo.GetById(id));
         }
     }
 }
