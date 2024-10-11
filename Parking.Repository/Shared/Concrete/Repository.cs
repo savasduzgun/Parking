@@ -56,5 +56,10 @@ namespace Parking.Repository.Shared.Concrete
         {
             throw new NotImplementedException();
         }
+
+        public void Save()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
