@@ -37,8 +37,10 @@ namespace Parking.Web.Controllers
         [HttpPost]
         public IActionResult HardDelete(VehicleType vehicleType)
         {
-            _context.VehicleTypes.Remove(vehicleType);
-            _context.SaveChanges();
+            //_context.VehicleTypes.Remove(vehicleType);
+            //_context.SaveChanges();
+            _vehicleTypeRepo.Delete(vehicleType);
+            _vehicleTypeRepo.Save();
             return Ok();
         }
 
