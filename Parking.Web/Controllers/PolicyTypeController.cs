@@ -82,15 +82,16 @@ namespace Parking.Web.Controllers
         [HttpPost]
         public IActionResult Update(PolicyType policyType) 
         {
-            _context.PolicyTypes.Update(policyType);
-            _context.SaveChanges();
-            return Ok();
+            //_context.PolicyTypes.Update(policyType);
+            //_context.SaveChanges();
+            
+            return Ok(_policyTypeRepo.Update(policyType));
         }
 
         [HttpPost]
         public IActionResult GetById(int id) 
         {
-            return Ok(_context.PolicyTypes.Find(id));
+            return Ok(_policyTypeRepo.GetById(id));
         }
     }
 }
