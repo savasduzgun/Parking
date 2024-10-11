@@ -20,8 +20,8 @@ namespace Parking.Web.Controllers
 
         public IActionResult GetAll() 
         {
-            // return Json(new {Data = _context.VehicleTypes.Where(vt=>!vt.IsDeleted)});
-            return Json(new { Data = _vehicleTypeRepo.GetAll() });
+            // return Json(new {data = _context.VehicleTypes.Where(vt=>!vt.IsDeleted)});
+            return Json(new { data = _vehicleTypeRepo.GetAll() });
         }
 
         [HttpPost]
