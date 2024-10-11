@@ -59,7 +59,8 @@ namespace Parking.Repository.Shared.Concrete
 
         public T Update(T entity)
         {
-            throw new NotImplementedException();
+            _dbSet.Update(entity);
+            return entity;
         }
 
         public void Save()
