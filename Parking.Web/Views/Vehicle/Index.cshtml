@@ -49,7 +49,6 @@
                 <div class="mb-3 row">
                     <label class="form-label">Araç Tipi</label>
                     <select class="form-select" id="ddlVehicleType">
-
                     </select>
                 </div>
                 @if (User.IsInRole("Admin"))
@@ -57,7 +56,6 @@
                     <div class="mb-3 row">
                         <label class="form-label">Kullanıcı Adı</label>
                         <select class="form-select" id="ddlUser">
-
                         </select>
                     </div>
                 }
@@ -111,11 +109,13 @@
 
                 fillVehicleTypes();
 
+                let appUserId;
+
                 if ("@User.IsInRole("Admin")" == "True") {
                     fillUsers();
                 }
 
-                $("#btnSave").off().click(() => {
+                $("#btnSave").text("Kaydet").off().click(() => {
 
                     if ("@User.IsInRole("Admin")" == "True") {
                         appUserId = $("#ddlUser").val();
@@ -147,7 +147,7 @@
                                 userName: $("#ddlUser option:selected").text()
                             }
                             DataTable.row.add(res).draw();
-                            $("#modal").modal("hide");
+                            $("#modalAdd").modal("hide");
                         }
                     });
                 });
@@ -193,7 +193,7 @@
                         res.odometer = $("#txtOdometer").val();
                         res.licensePlate = $("#txtLicensePlate").val();
                         res.vehicleTypeId = $("#dllVehicleType").val();
-                        // res.appUserId = $("#dllUser").val();
+                        res.appUserId = $("#dllUser").val();
 
                         $.ajax({
                             url: '/Vehicle/Update',

@@ -11,21 +11,21 @@ namespace Parking.Web.Controllers
     [Authorize] //Bu controller ı sadece authorize olanlar çağırabilir. //Hem admin hem users görüntüleyeceği için login olanlar görebilsin diye
     public class VehicleController : Controller
     {
-       /*
+
         private readonly ApplicationDbContext _context;
 
         public VehicleController(ApplicationDbContext context)
         {
             _context = context;
         }
-       */
 
-        private readonly IRepository<Vehicle> _vehicleRepository;
 
-        public VehicleController(IRepository<Vehicle> vehicleRepository)
-        {
-            _vehicleRepository = vehicleRepository;
-        }
+        //private readonly IRepository<Vehicle> _vehicleRepository;
+
+        //public VehicleController(IRepository<Vehicle> vehicleRepository)
+        //{
+        //    _vehicleRepository = vehicleRepository;
+        //}
 
         public IActionResult Index()
         {
@@ -34,12 +34,12 @@ namespace Parking.Web.Controllers
 
         public IActionResult GetAll() 
         {
-            bool isAdmin = User.IsInRole("Admin");
-            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            //bool isAdmin = User.IsInRole("Admin");
+            //int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            return Json(new {data =_vehicleRepository.GetAll(), userId = userId});
+            //return Json(new {data =_vehicleRepository.GetAll(), userId = userId});
          
-            /*
+            
 
             //Bu satırda, kullanıcı rolü kontrol ediliyor. Eğer giriş yapan kullanıcı Admin rolüne sahipse, aşağıdaki işlemler yapılacak. Aksi durumda, normal bir kullanıcı olarak kabul edilecek ve farklı bir sorgu çalıştırılacak.
             if (User.IsInRole("Admin"))
@@ -64,53 +64,53 @@ namespace Parking.Web.Controllers
                 return Json(new { data = result });
             }
 
-            */
+            
         }
 
 
         [HttpPost]
         public IActionResult Add(Vehicle vehicle) 
         {
-            //_context.Vehicles.Add(vehicle);
-            //_context.SaveChanges();
-            _vehicleRepository.Add(vehicle);
+            _context.Vehicles.Add(vehicle);
+            _context.SaveChanges();
+            //_vehicleRepository.Add(vehicle);
             return Ok(vehicle);
         }
 
         [HttpPost]
         public IActionResult Update(Vehicle vehicle) 
         {
-            //_context.Vehicles.Update(vehicle);
-            //_context.SaveChanges();
-            _vehicleRepository.Update(vehicle);
+            _context.Vehicles.Update(vehicle);
+            _context.SaveChanges();
+            //_vehicleRepository.Update(vehicle);
             return Ok(vehicle);
         }
 
         [HttpPost]
         public IActionResult Delete(int id) 
         {
-            //Vehicle vehicle = _context.Vehicles.Find(id);
-            //vehicle.IsDeleted= true;
-            //_context.Vehicles.Update(vehicle);
-            //_context.SaveChanges();
-            _vehicleRepository.DeleteById(id);
+            Vehicle vehicle = _context.Vehicles.Find(id);
+            vehicle.IsDeleted = true;
+            _context.Vehicles.Update(vehicle);
+            _context.SaveChanges();
+            //_vehicleRepository.DeleteById(id);
             return Ok();
         }
 
         [HttpPost]
         public IActionResult HardDelete(Vehicle vehicle)
-        {  
-            //_context.Vehicles.Remove(vehicle);
-            //_context.SaveChanges();
-            _vehicleRepository.Delete(vehicle);
+        {
+            _context.Vehicles.Remove(vehicle);
+            _context.SaveChanges();
+            //_vehicleRepository.Delete(vehicle);
             return Ok();
         }
 
         [HttpPost]
         public IActionResult GetById(int id) 
         {
-            //return Ok(_context.Vehicles.Find(id));
-            return Ok(_vehicleRepository.GetById(id));
+            return Ok(_context.Vehicles.Find(id));
+            //return Ok(_vehicleRepository.GetById(id));
         }
     }
 }
