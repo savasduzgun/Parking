@@ -2,12 +2,7 @@
 using Parking.Data;
 using Parking.Models;
 using Parking.Repository.Shared.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Parking.Repository.Shared.Concrete
 {
@@ -47,9 +42,9 @@ namespace Parking.Repository.Shared.Concrete
 
         }
 
-        public IEnumerable<T> GetAll()
+        public virtual IQueryable<T> GetAll()
         {
-            return _dbSet.Where(x => !x.IsDeleted).ToList();
+            return _dbSet.Where(x => !x.IsDeleted);
             
         }
 
