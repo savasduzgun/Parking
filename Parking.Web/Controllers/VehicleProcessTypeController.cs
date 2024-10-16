@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Parking.Data;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Parking.Models;
 using Parking.Repository.Shared.Abstract;
 
 namespace Parking.Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class VehicleProcessTypeController : Controller
     {
         //private readonly ApplicationDbContext _context;

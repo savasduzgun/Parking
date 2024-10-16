@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Parking.Data;
 using Parking.Models;
+using Parking.Repository.Abstract;
 using Parking.Repository.Shared.Abstract;
 using System.Numerics;
 using System.Security.Claims;
@@ -12,20 +13,21 @@ namespace Parking.Web.Controllers
     public class VehicleController : Controller
     {
 
-        private readonly ApplicationDbContext _context;
+        //private readonly ApplicationDbContext _context;
 
-        public VehicleController(ApplicationDbContext context)
-        {
-            _context = context;
-        }
-
-
-        //private readonly IRepository<Vehicle> _vehicleRepository;
-
-        //public VehicleController(IRepository<Vehicle> vehicleRepository)
+        //public VehicleController(ApplicationDbContext context)
         //{
-        //    _vehicleRepository = vehicleRepository;
+        //    _context = context;
         //}
+
+
+
+        private readonly IVehicleRepository _vehicleRepository;
+
+        public VehicleController(IVehicleRepository vehicleRepository)
+        {
+            _vehicleRepository = vehicleRepository;
+        }
 
         public IActionResult Index()
         {
@@ -34,36 +36,10 @@ namespace Parking.Web.Controllers
 
         public IActionResult GetAll() 
         {
-            //bool isAdmin = User.IsInRole("Admin");
-            //int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            bool isAdmin = User.IsInRole("Admin");
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            //return Json(new {data =_vehicleRepository.GetAll(), userId = userId});
-         
-            
-
-            //Bu satırda, kullanıcı rolü kontrol ediliyor. Eğer giriş yapan kullanıcı Admin rolüne sahipse, aşağıdaki işlemler yapılacak. Aksi durumda, normal bir kullanıcı olarak kabul edilecek ve farklı bir sorgu çalıştırılacak.
-            if (User.IsInRole("Admin"))
-            {
-                //Eğer kullanıcı Admin ise, Vehicles (Araçlar) tablosundaki silinmemiş (IsDeleted = false) tüm araçlar sorgulanır.Select metodu ile her bir araçtan belli başlı bilgiler(adı, kilometre sayacı, plaka numarası, vb.) alınır ve result adında bir değişkene atanır.Admin kullanıcı tüm araçları görebilir, herhangi bir kullanıcıya bağlı olmasa bile.
-                var result = _context.Vehicles.Where(v => !v.IsDeleted).Select(v => new Vehicle
-                {
-                    Name = v.Name,
-                    Odometer = v.Odometer,
-                    Id = v.Id,
-                    LicensePlate = v.LicensePlate,
-                    VehicleType = v.VehicleType,
-                    AppUser = v.AppUser
-                });
-                return Json(new { data = result });
-            }
-            else 
-            {
-                //Eğer kullanıcı Admin değilse, kullanıcının kimliği belirlenir. User.FindFirst(ClaimTypes.NameIdentifier) kullanılarak, giriş yapan kullanıcının ID’si elde edilir ve integer (tam sayı) formatına çevrilir. Bu kullanıcı ID’si appUserId değişkenine atanır. Sorgu, sadece bu kullanıcıya (AppUserId) ait ve silinmemiş (IsDeleted = false) araçları döndürmek üzere yapılır.
-                int appUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-                var result = _context.Vehicles.Where(v => !v.IsDeleted && v.AppUserId == appUserId);
-                return Json(new { data = result });
-            }
-
+            return Json(new {data =_vehicleRepository.GetAll(isAdmin,userId)});
             
         }
 
@@ -71,46 +47,50 @@ namespace Parking.Web.Controllers
         [HttpPost]
         public IActionResult Add(Vehicle vehicle) 
         {
-            _context.Vehicles.Add(vehicle);
-            _context.SaveChanges();
-            //_vehicleRepository.Add(vehicle);
-            return Ok(vehicle);
+            //_context.Vehicles.Add(vehicle);
+            //_context.SaveChanges();
+            //return Ok(vehicle);
+            return Ok(_vehicleRepository.Add(vehicle));
+
         }
 
         [HttpPost]
         public IActionResult Update(Vehicle vehicle) 
         {
-            _context.Vehicles.Update(vehicle);
-            _context.SaveChanges();
-            //_vehicleRepository.Update(vehicle);
-            return Ok(vehicle);
+            //_context.Vehicles.Update(vehicle);
+            //_context.SaveChanges();
+            //return Ok(vehicle);
+            return Ok(_vehicleRepository.Update(vehicle));
+
         }
 
         [HttpPost]
         public IActionResult Delete(int id) 
         {
-            Vehicle vehicle = _context.Vehicles.Find(id);
-            vehicle.IsDeleted = true;
-            _context.Vehicles.Update(vehicle);
-            _context.SaveChanges();
-            //_vehicleRepository.DeleteById(id);
+            //Vehicle vehicle = _context.Vehicles.Find(id);
+            //vehicle.IsDeleted = true;
+            //_context.Vehicles.Update(vehicle);
+            //_context.SaveChanges();
+            //return Ok();
+            _vehicleRepository.DeleteById(id);
             return Ok();
+
         }
 
         [HttpPost]
         public IActionResult HardDelete(Vehicle vehicle)
         {
-            _context.Vehicles.Remove(vehicle);
-            _context.SaveChanges();
-            //_vehicleRepository.Delete(vehicle);
+            //_context.Vehicles.Remove(vehicle);
+            //_context.SaveChanges();
+            _vehicleRepository.Delete(vehicle);
             return Ok();
         }
 
         [HttpPost]
         public IActionResult GetById(int id) 
         {
-            return Ok(_context.Vehicles.Find(id));
-            //return Ok(_vehicleRepository.GetById(id));
+            //return Ok(_context.Vehicles.Find(id));
+            return Ok(_vehicleRepository.GetById(id));
         }
     }
 }
