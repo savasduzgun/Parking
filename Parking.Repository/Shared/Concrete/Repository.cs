@@ -33,13 +33,18 @@ namespace Parking.Repository.Shared.Concrete
 
         public T DeleteById(int id)
         {
-           T entity= _dbSet.Find(id);
-            entity.IsDeleted= true;
-            entity.DateDeleted= DateTime.Now;
-            _dbSet.Update(entity);
-            Save();
-            return entity;
+            T entity = _dbSet.Find(id);
+            if (entity != null)
+            {
 
+
+                entity.IsDeleted = true;
+                entity.DateDeleted = DateTime.Now;
+                _dbSet.Update(entity);
+                Save();
+
+            }
+            return entity;
         }
 
         public virtual IQueryable<T> GetAll()
@@ -72,6 +77,11 @@ namespace Parking.Repository.Shared.Concrete
         public void Save()
         {
             _context.SaveChanges();
+        }
+
+        public T GetByGuid(Guid id)
+        {
+            return GetFirstOrDefault(x => x.Guid == id);
         }
     }
 }
