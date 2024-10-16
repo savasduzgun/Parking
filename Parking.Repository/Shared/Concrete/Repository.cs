@@ -47,6 +47,10 @@ namespace Parking.Repository.Shared.Concrete
             return _dbSet.Where(x => !x.IsDeleted);
             
         }
+        public IQueryable<T> GetAll(Expression<Func<T, bool>> filter)
+        {
+            return GetAll().Where(filter);
+        }
 
         public T GetById(int id)
         {

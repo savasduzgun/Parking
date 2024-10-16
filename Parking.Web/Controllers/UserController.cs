@@ -23,7 +23,17 @@ namespace Parking.Web.Controllers
 
         public IActionResult GetAll() //Bütün kullanıcıları verecek method
         {
-            return Json(new {data=_context.Users.Where(u=>!u.IsDeleted).ToList()}); //Isdeleted false olanları verecek
+            /* return Json(new {data=_context.Users.Where(u=>!u.IsDeleted).ToList()});*/ //Isdeleted false olanları verecek
+
+            var result = _context.Users.Where(u => !u.IsDeleted).Select(x => new AppUser
+            {
+                FullName=x.FullName,
+                Id=x.Id,
+                UserName=x.UserName,
+                IsAdmin=x.IsAdmin,
+                Vehicles=x.Vehicles
+            }).ToList();
+            return View(new { data = result });
         }
         public IActionResult Login()
         {

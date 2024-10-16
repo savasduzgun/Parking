@@ -119,6 +119,11 @@
                     { data: 'userName', title: 'Kullanıcı Adı' },
                     { data: 'fullName', title: 'Ad Soyad' },
                     {
+                        data: 'vehicles', title: 'Araç Sayısı', render: (data) => {
+                            return data.lenght;
+                        }
+                    },
+                    {
                         data: 'isAdmin', title: 'Admin mi ?', render: function (data) {
                             if (data) {
                                 return `<i class="btn uil-check fs-6 btn-success"></i>`;
