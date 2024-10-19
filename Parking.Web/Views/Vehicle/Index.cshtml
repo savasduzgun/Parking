@@ -166,7 +166,7 @@
                     },
                     success: () => {
                         let satir = $(button).parent().parent();
-                        DataTable.row(satir).remove().draw(false);
+                        DataTable.row(satir).remove().draw(false); //false 2.sayfadan veri silinice ilk sayfaya atmasın diye
                     }
                 });
             }

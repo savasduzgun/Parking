@@ -104,6 +104,7 @@
                         success: function (res) {
 
                             $("#modalAdd").modal("hide");
+                            //dataTable'ın ajax kaynağını yeniden request etmesini önlemek için, direkt olarak datatable'ın row collectionından ilgili satırı client tarafında ekleme
                             DataTable.row.add(res).draw();
                         }
                     })
@@ -120,7 +121,7 @@
                     { data: 'fullName', title: 'Ad Soyad' },
                     {
                         data: 'vehicles', title: 'Araç Sayısı', render: (data) => {
-                            return data.lenght;
+                            return data.length;
                         }
                     },
                     {
@@ -138,7 +139,7 @@
                         }
                     },
                     {
-                        data: 'id', title: 'İşlemler', render: function (data) {
+                        data: 'id', title: 'İşlemler', render: function (data, type, row) {
                             return `<a title="Düzenle" onclick="updateUser(${data}, this)" class="btn uil-pen fs-6 btn-primary"></a> <a title="Sil" onclick="deleteUser(${data}, this)" class="btn uil-trash-alt fs-6 btn-danger"></a>`;
                         }
                     }

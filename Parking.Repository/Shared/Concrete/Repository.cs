@@ -31,18 +31,15 @@ namespace Parking.Repository.Shared.Concrete
             return entity;
         }
 
-        public T DeleteById(int id)
+        public virtual T DeleteById(int id)
         {
             T entity = _dbSet.Find(id);
             if (entity != null)
             {
-
-
                 entity.IsDeleted = true;
                 entity.DateDeleted = DateTime.Now;
                 _dbSet.Update(entity);
                 Save();
-
             }
             return entity;
         }
